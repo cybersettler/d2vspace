@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>websemble</title>
+    <%- styles.map(function(item){
+      return '<link rel="stylesheet" href="' + item +'" />';
+    }).join("\n") %>
+    <%- components.map(function(item){
+      return '<link rel="import" href="' + item +'" />';
+    }).join("\n") %>
+    <style>
+      core-app {
+        display:block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="messages" style="max-height:100px; overflow-x:hidden; overflow-y:scroll;"></div>
+    <core-app class="container-fluid"></core-app>
+  </body>
+</html>

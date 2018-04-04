@@ -1,0 +1,23 @@
+{
+  "name": "d2vspace-buildscript",
+  "description": "Buildscript",
+  "main": "gulpfile.js",
+  "authors": [
+    "Javier escobar <cybersettler@babylonone.com>"
+  ],
+  "license": "Apache-2.0",
+  "keywords": [
+    "websemble"
+  ],
+  "homepage": "https://github.com/cybersettler/d2vspace",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "uiPanel": "cybersettler/uiPanel"
+  }
+}

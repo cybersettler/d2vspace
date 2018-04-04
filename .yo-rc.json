@@ -1,0 +1,29 @@
+{
+  "generator-websemble": {
+    "appname": "d2vspace",
+    "description": "Digital distributed virtual space",
+    "structure": {
+      "webapp": "src/main/webapp/",
+      "backend": {
+        "root": "src/main/webapp/backend/",
+        "model": "src/main/webapp/backend/model/",
+        "view": "src/main/webapp/backend/view/",
+        "controller": "src/main/webapp/backend/controller/",
+        "util": "src/main/webapp/backend/util/"
+      },
+      "frontend": {
+        "root": "src/main/webapp/frontend/",
+        "assets": "src/main/webapp/frontend/assets/",
+        "controller": "src/main/webapp/frontend/controller/",
+        "factory": "src/main/webapp/frontend/factory/",
+        "service": "src/main/webapp/frontend/service/",
+        "util": "src/main/webapp/frontend/util/"
+      },
+      "less": "src/main/less/",
+      "template": "src/main/template/",
+      "jasmine": "src/test/jasmine/",
+      "component": "src/main/component/",
+      "bootstrapConfig": "src/main/resources/bootstrap/"
+    }
+  }
+}

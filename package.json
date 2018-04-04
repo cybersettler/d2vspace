@@ -1,0 +1,25 @@
+{
+  "name": "d2vspace-buildscript",
+  "version": "0.0.0",
+  "description": "Buildscript",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "keywords": [
+    "websemble"
+  ],
+  "dependencies": {
+    "async": "^2.6.0",
+    "bower": "^1.8.4",
+    "del": "^2.2.2",
+    "ejs": "^2.5.8",
+    "gulp": "^3.9.1",
+    "gulp-install": "^0.6.0",
+    "gulp-shell": "^0.5.2",
+    "gulp-tap": "^0.1.3",
+    "less": "^2.7.3",
+    "map-stream": "0.0.6",
+    "vinyl-paths": "^2.1.0"
+  }
+}

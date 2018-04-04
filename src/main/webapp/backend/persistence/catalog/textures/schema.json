@@ -1,0 +1,33 @@
+{
+  "$schema":"http://json-schema.org/draft-04/schema#",
+  "title":"Texture",
+  "description":"Body texture of a component.",
+  "type":"object",
+  "properties":{
+    "id":{
+      "title":"ID",
+      "description":"Unique identifier for this texture.",
+      "type":"string"
+    },
+    "name":{
+      "title":"Name",
+      "type":"string"
+      },
+    "imageURL": {
+      "title":"Image URL",
+      "type":"string"
+    },
+    "mapping": {
+      "title":"Mapping",
+      "type":"string",
+      "enum":[
+        "UVMapping",
+        "CubeReflectionMapping",
+        "CubeRefractionMapping",
+        "EquirectangularReflectionMapping",
+        "EquirectangularRefractionMapping",
+        "SphericalReflectionMapping"
+      ]
+    }
+  }
+}

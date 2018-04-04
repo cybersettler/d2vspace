@@ -1,0 +1,15 @@
+[
+  {
+    "name":"mushroomTexture",
+    "imageURL": "mushroom_block_skin_stem.png",
+    "mapping": "UVMapping"
+  },{
+    "name":"brickTexture",
+    "imageURL": "brick.png",
+    "mapping": "UVMapping"
+  },{
+    "name":"sandstoneTexture",
+    "imageURL": "sandstone_smooth.png",
+    "mapping": "UVMapping"
+  }
+]
