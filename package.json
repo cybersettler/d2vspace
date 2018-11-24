@@ -1,8 +1,8 @@
 {
   "name": "d2vspace-buildscript",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Buildscript",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "gulp test"
   },
@@ -14,12 +14,18 @@
     "bower": "^1.8.4",
     "del": "^2.2.2",
     "ejs": "^2.5.8",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
+    "gulp-filter-by": "^1.2.0",
     "gulp-install": "^0.6.0",
+    "gulp-merge": "^0.1.1",
     "gulp-shell": "^0.5.2",
-    "gulp-tap": "^0.1.3",
-    "less": "^2.7.3",
+    "less": "^3.0.4",
     "map-stream": "0.0.6",
-    "vinyl-paths": "^2.1.0"
-  }
+    "vinyl-paths": "^2.1.0",
+    "weldkit": "^0.1.8"
+  },
+  "repository": "git@github.com:cybersettler/d2vspace.git",
+  "author": "Javier escobar <cybersettler@babylonone.com>",
+  "license": "Apache-2.0",
+  "private": false
 }

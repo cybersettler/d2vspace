@@ -2,12 +2,15 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <!-- meta http-equiv="Content-Security-Policy" content="default-src 'none'" -->
     <title>websemble</title>
     <%- styles.map(function(item){
-      return '<link rel="stylesheet" href="' + item +'" />';
+      return `<link rel="stylesheet" href="${item}" />`;
     }).join("\n") %>
+    <script src="/node_modules/systemjs/dist/system-production.js"></script>
+    <script type="module" src="/node_modules/weldkit/index.js"></script>
     <%- components.map(function(item){
-      return '<link rel="import" href="' + item +'" />';
+    return `<script type="module" src="${item}"></script>`;
     }).join("\n") %>
     <style>
       core-app {
@@ -17,6 +20,6 @@
   </head>
   <body>
     <div id="messages" style="max-height:100px; overflow-x:hidden; overflow-y:scroll;"></div>
-    <core-app class="container-fluid"></core-app>
+    <web-app data-role="app" class="container-fluid"></web-app>
   </body>
 </html>

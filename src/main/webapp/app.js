@@ -1,31 +1,32 @@
 const Websemble = require('websemble');
 const protocol = require('electron').protocol;
 const path = require('path');
-const IPFS = require('ipfs');
+// const IPFS = require('ipfs');
 
-var app = new Websemble.backend.App();
-app.onReady.then(function () {
 
-    console.log("process versions:", process.versions);
+var app = new Websemble.ElectronApp.getInstance({width: 800, height: 600});
+
+app.onReady.then(function() {
+  console.log('process versions:', process.versions);
+  // Open the devtools.
+  app.mainWindow.openDevTools();
 
     // Spawn your IPFS node \o/
-    const node = new IPFS();
+  //  const node = new IPFS();
 
-    // console.log('Node', node);
-
-    node.on('ready', function () {
+/*    node.on('ready', function () {
         /* node.id(function (err, id) {
          if (err) {
          return console.log('error', err)
          }
          console.log('id:', id)
-         }); */
+         });
         console.log('IPFS node ready');
     });
 
     node.on('error', function(err) {
         console.log("IPFS node error:", err);
-    });
+    }); */
 
 
 
