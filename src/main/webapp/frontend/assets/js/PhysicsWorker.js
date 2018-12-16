@@ -1,4 +1,6 @@
-importScripts('./ammo.wasm.js', './WorldDynamicsFactory.js', './RigidBodyFactory');
+importScripts('./ammo.wasm.js',
+'/node_modules/three/build/three.js',
+'./WorldDynamicsFactory.js', './RigidBodyFactory');
 
 Ammo().then(function(Ammo) {
 
@@ -8,7 +10,7 @@ Ammo().then(function(Ammo) {
   });
 
   // START -- Your code here
-  
+
   let interval;
 
   function startLoop() {
@@ -35,15 +37,21 @@ Ammo().then(function(Ammo) {
   }
 
   onmessage = function(event) {
-    if (event.data === 'START') {
+    if (event.data.command === 'START') {
       startLoop();
     } else if (event.data.command === 'INIT_WORLD') {
       dynamicsWorld.initWorld(event.data.payload)
-          .then(postMessage('WORLD_READY'));
+          .then(function() {
+            postMessage({
+              status: 'WORLD_READY'
+            });
+          });
+    } else if (event.data.command === 'MOVE') {
+
     }
   };
 
-  postMessage('WORKER_READY');
+  postMessage({status:'WORKER_READY'});
 
   // END
 });

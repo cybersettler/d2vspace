@@ -30,6 +30,11 @@ class LoopHandler {
     return this;
   }
 
+  handleMoveForward() {
+    // physicsWorker.postMessage('move');
+    console.log("move forward");
+  }
+
   updatePhysics() {
     return this;
   }
@@ -44,15 +49,17 @@ class LoopHandler {
     let physicsWorker = new Worker('/frontend/assets/js/PhysicsWorker.js');
 
     physicsWorker.onmessage = function(event) {
-      if (event.data === 'WORKER_READY') {
+      if (event.data.status === 'WORKER_READY') {
         physicsWorker.postMessage({command: 'INIT_WORLD', payload: world});
-      } else if(event.data === 'WORLD_READY') {
-        physicsWorker.postMessage('START');
-        loop.updatePhysics()
+      } else if(event.data.status === 'WORLD_READY') {
+        let subjectId = event.data.subjectId;
+        physicsWorker.postMessage({command: 'START'});
+        /* loop.updatePhysics()
         .updateWorld()
         .updatePerspective(event.data)
-        .tick();
-        loop.requestId = requestAnimationFrame(() => loop.updateWorld());
+        .tick(); */
+        loop.updatePerspective();
+        // loop.requestId = requestAnimationFrame(() => loop.updateWorld());
       } else {
         loop.updatePerspective(event.data);
       }

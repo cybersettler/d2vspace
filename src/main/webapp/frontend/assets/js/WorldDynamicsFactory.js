@@ -6,8 +6,6 @@ class World {
 
     let Ammo = config.Ammo;
 
-    // Ammo = config.Ammo;
-
     collisionConfiguration = new Ammo.btDefaultCollisionConfiguration();
     dispatcher = new Ammo.btCollisionDispatcher(collisionConfiguration);
     overlappingPairCache = new Ammo.btDbvtBroadphase();
@@ -34,6 +32,7 @@ class World {
     this.dynamicsWorld.setGravity(gravityVector);
     this.initGround(config);
     this.initObjects(config);
+    this.initSubject(config);
     return Promise.resolve();
   }
 
@@ -45,14 +44,56 @@ class World {
   initObjects(config) {
     let bodies = [];
     let dynamicObjects = [];
+    const DynamicObjectsMap = {};
     config.content.forEach(WorldUtil.addInstances, {
       bodies: bodies,
       config: config,
       dynamicObjects: dynamicObjects,
-      world: this,
+      DynamicObjectsMap: DynamicObjectsMap,
+      world: this
     });
     this.bodies = bodies;
     this.dynamicObjects = dynamicObjects;
+    this.DynamicObjectsMap = DynamicObjectsMap;
+  }
+
+  initSubject(config) {
+    let position = config.subject.position || config.subject.defaultPosition;
+    let radius = 0.3;
+
+    let bodyData = {
+      geometry: {
+        type: 'SphereGeometry',
+        radius: radius
+      },
+      mass: 0
+    };
+
+    let body = this.rigidBodyFactory.create(bodyData);
+    this.dynamicsWorld.addRigidBody(body);
+
+    this.subject = body;
+
+    this.dynamicObjects.push({
+      uuid: config.subject.uuid,
+      body: body
+    });
+
+    this.subjectId = config.subject.uuid;
+
+    let origin = body.getWorldTransform().getOrigin();
+    origin.setX(position[0]);
+    origin.setY(position[1] + radius);
+    origin.setZ(position[2]);
+    body.activate();
+    let rotation = body.getWorldTransform().getRotation();
+    rotation.setX(1);
+    rotation.setY(0);
+    rotation.setZ(0);
+    rotation.setW(1);
+
+    this.subject = body;
+    this.dynamicsWorld.addRigidBody(body);
   }
 
   destroy() {
@@ -67,6 +108,7 @@ class World {
   simulate(dt) {
     dt = dt || 1;
     this.dynamicsWorld.stepSimulation(dt, 2);
+    let subjectId = this.subjectId;
     let transform = this.state.transform;
 
     this.state.objects = this.dynamicObjects.map((item) => {
@@ -76,9 +118,15 @@ class World {
       let position = transform.getOrigin();
       let rotation = transform.getRotation();
 
+      let offset = 0;
+
+      if (item.uuid === subjectId) {
+        offset = - 0.3;
+      }
+
       return {
         uuid: item.uuid,
-        position: [position.x(), position.y(), position.z()],
+        position: [position.x(), position.y() + offset, position.z()],
         rotation: [rotation.x(), rotation.y(), rotation.z(), rotation.w()],
       };
     });
@@ -100,7 +148,8 @@ const WorldUtil = {
     let component = this.component,
         world = this.world,
         bodies = this.bodies,
-        dynamicObjects = this.dynamicObjects;
+        dynamicObjects = this.dynamicObjects,
+        DynamicObjectsMap = this.DynamicObjectsMap;
 
     if (component.type === 'illumination') {
       return;
@@ -109,13 +158,13 @@ const WorldUtil = {
     let bodyData = {
       position: item.position,
       rotation: item.rotation,
-      uuid: item.uuid,
+      uuid: item.uuid || THREE.Math.generateUUID(),
       type: component.type,
       geometry: component.geometry,
       mass: item.mass
     };
+
     let body = world.rigidBodyFactory.create(bodyData);
-    body.setUserPointer(item.uuid);
     world.dynamicsWorld.addRigidBody(body);
 
     bodies.push(body);

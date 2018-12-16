@@ -1,6 +1,7 @@
 import {PageElement} from '/node_modules/weldkit/index.js';
 import MouseControls from '/frontend/component/mousecontrols.js';
 import LoopHandler from '/frontend/component/LoopHandler.js';
+import KeyboardControls from '/frontend/assets/js/KeyboardControls.js';
 
 const world = {
   'name': 'Home',
@@ -36,13 +37,12 @@ const world = {
     }, {
       'component': 'redBall',
       'instances': [
-        {'position': [0, 5, -3], 'rotation': [0, 0, 0],
-          'uuid': '2822d1c5-8273-4039-a7be-c1d7387c4f61',
+        {
+          'position': [0, 5, -3], 'rotation': [0, 0, 0],
           'mass': 1,
         },
       ],
     },
-
   ],
   'geometries': [
     {
@@ -234,19 +234,35 @@ class IndexElement extends PageElement {
 
   connectedCallback() {
     let element = this;
+    let keyboardControls = new KeyboardControls();
+    let perspective;
     this.scope.appendViewFromTemplate(
-        '/frontend/component/page/Index/view.html').then((template) => {
-      let mouseControls = new MouseControls(element);
-      let perspective = element.querySelector('ui-p3d');
+        '/frontend/component/page/Index/view.html')
+        .then((template) => {
+          console.log('Template imported', template.id);
+          let mouseControls = new MouseControls(element);
+          perspective = element.querySelector('ui-p3d');
+
+      return new Promise(function(fulfill) {
+        perspective.addEventListener('initialized', function(event) {
+          fulfill(event.detail);
+        });
+      });
+    })
+    .then(function(result) {
       let loop = new LoopHandler({
         perspective: perspective,
-        world: world,
+        world: result,
       });
       element.onMouseMouse = function(data) {
         loop.handleMouseMove(data);
       };
+
+      keyboardControls.addDownEventHandler('w', function() {
+        loop.handleMoveForward();
+      });
+
       loop.animate();
-      console.log('Template imported', template.id);
     });
   }
 
