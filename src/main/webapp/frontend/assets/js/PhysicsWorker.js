@@ -1,10 +1,18 @@
 importScripts('./ammo.wasm.js',
 '/node_modules/three/build/three.js',
-'./WorldDynamicsFactory.js', './RigidBodyFactory');
+'./WorldDynamicsFactory.js', './RigidBodyFactory.js',
+'./HumanModel.js'
+);
+
+// define ACTIVE_TAG 1
+// define ISLAND_SLEEPING 2
+// define WANTS_DEACTIVATION 3
+// define DISABLE_DEACTIVATION 4
+// define DISABLE_SIMULATION 5
 
 Ammo().then(function(Ammo) {
 
-  let dynamicsWorld = WorldDynamicsFactory.create({
+  let world = WorldDynamicsFactory.create({
     Ammo: Ammo,
     rigidBodyFactory: new RigidBodyFactory(Ammo)
   });
@@ -18,16 +26,16 @@ Ammo().then(function(Ammo) {
     if (interval) {
       clearInterval(interval);
     }
-    dynamicsWorld.state.time = Date.now();
+    world.state.time = Date.now();
     interval = setInterval(mainLoop, 1000/60);
   }
 
   function mainLoop() {
-    let time = dynamicsWorld.state.time;
+    let time = world.state.time;
     let now = Date.now();
-    let state = dynamicsWorld.simulate(now - time);
+    let state = world.simulate(now - time);
     postMessage({ objects: state.objects});
-    dynamicsWorld.state.time = now;
+    world.state.time = now;
   }
 
   function stopLoop() {
@@ -40,14 +48,28 @@ Ammo().then(function(Ammo) {
     if (event.data.command === 'START') {
       startLoop();
     } else if (event.data.command === 'INIT_WORLD') {
-      dynamicsWorld.initWorld(event.data.payload)
+      world.initWorld(event.data.payload)
           .then(function() {
             postMessage({
               status: 'WORLD_READY'
             });
           });
     } else if (event.data.command === 'MOVE') {
-
+      if (!world.subject.isActive()) {
+        console.warn("character not active");
+        world.subject.forceActivationState(1);
+      }
+      let transform = world.state.transform;
+      world.subject.getMotionState()
+        .getWorldTransform (transform);
+      let torque = new Ammo.btVector3(1,0,0);
+      world.subject.applyTorque(torque);
+      world.subject.getMotionState()
+        .setWorldTransform(transform);
+      world.subject.setCenterOfMassTransform(transform);
+      let dt = Date.now() - world.state.time;
+      // world.subject.walk(null, dt);
+      world.dynamicsWorld.stepSimulation(dt, 2);
     }
   };
 

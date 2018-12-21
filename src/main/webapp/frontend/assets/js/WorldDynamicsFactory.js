@@ -58,21 +58,45 @@ class World {
   }
 
   initSubject(config) {
-    let position = config.subject.position || config.subject.defaultPosition;
-    let radius = 0.3;
 
-    let bodyData = {
+    let position = config.subject.position || config.subject.defaultPosition;
+
+    /* let model = new HumanModel({
+      width: 0.6,
+      height: 1.7,
+      mass: 70,
+      position: position
+    });
+
+    this.dynamicObjects.push({
+      uuid: config.subject.uuid,
+      body: model.body
+    });
+
+    this.subjectId = config.subject.uuid;
+    this.subject = model;
+    this.dynamicsWorld.addRigidBody(model.body);
+
+    let origin = model.body.getWorldTransform().getOrigin();
+    origin.setX(position[0]);
+    origin.setY(position[1] + 1);
+    origin.setZ(position[2]);
+    model.body.setSleepingThresholds (0.0, 0.0);
+    model.body.activate();
+    let rotation = model.body.getWorldTransform().getRotation();
+    rotation.setX(1);
+    rotation.setY(0);
+    rotation.setZ(0);
+    rotation.setW(1);
+    this.dynamicsWorld.addRigidBody(model.body); */
+
+    let body = this.rigidBodyFactory.create({
       geometry: {
         type: 'SphereGeometry',
-        radius: radius
+        radius: 0.3
       },
-      mass: 0
-    };
-
-    let body = this.rigidBodyFactory.create(bodyData);
-    this.dynamicsWorld.addRigidBody(body);
-
-    this.subject = body;
+      mass: 1
+    });
 
     this.dynamicObjects.push({
       uuid: config.subject.uuid,
@@ -80,20 +104,20 @@ class World {
     });
 
     this.subjectId = config.subject.uuid;
+    this.subject = body;
+    this.dynamicsWorld.addRigidBody(body);
 
     let origin = body.getWorldTransform().getOrigin();
     origin.setX(position[0]);
-    origin.setY(position[1] + radius);
+    origin.setY(position[1] + 1);
     origin.setZ(position[2]);
+    body.setSleepingThresholds (0.0, 0.0);
     body.activate();
     let rotation = body.getWorldTransform().getRotation();
     rotation.setX(1);
     rotation.setY(0);
     rotation.setZ(0);
     rotation.setW(1);
-
-    this.subject = body;
-    this.dynamicsWorld.addRigidBody(body);
   }
 
   destroy() {
@@ -121,7 +145,7 @@ class World {
       let offset = 0;
 
       if (item.uuid === subjectId) {
-        offset = - 0.3;
+//        offset = - 0.3;
       }
 
       return {

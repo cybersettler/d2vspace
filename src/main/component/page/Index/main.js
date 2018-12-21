@@ -1,7 +1,5 @@
 import {PageElement} from '/node_modules/weldkit/index.js';
-import MouseControls from '/frontend/component/mousecontrols.js';
 import LoopHandler from '/frontend/component/LoopHandler.js';
-import KeyboardControls from '/frontend/assets/js/KeyboardControls.js';
 
 const world = {
   'name': 'Home',
@@ -151,22 +149,7 @@ const world = {
       'name': 'AmbientLight1',
       'color': 16777215,
       'matrix': [
-        1,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        99.58999633789062,
-        0,
-        1],
+        1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 99.58999633789062, 0, 1],
     }, {
       'type': 'Mesh',
       'name': 'brickBlock',
@@ -234,42 +217,33 @@ class IndexElement extends PageElement {
 
   connectedCallback() {
     let element = this;
-    let keyboardControls = new KeyboardControls();
-    let perspective;
+    let perspective, loop;
     this.scope.appendViewFromTemplate(
         '/frontend/component/page/Index/view.html')
         .then((template) => {
           console.log('Template imported', template.id);
-          let mouseControls = new MouseControls(element);
           perspective = element.querySelector('ui-p3d');
 
-      return new Promise(function(fulfill) {
-        perspective.addEventListener('initialized', function(event) {
-          fulfill(event.detail);
+          return new Promise(function(fulfill) {
+            perspective.addEventListener('initialized', function(event) {
+              fulfill(event.detail);
+            });
+          });
+        })
+        .then(function(result) {
+          loop = new LoopHandler({
+            perspective: perspective,
+            world: result,
+          });
+
+          loop.start();
         });
-      });
-    })
-    .then(function(result) {
-      let loop = new LoopHandler({
-        perspective: perspective,
-        world: result,
-      });
-      element.onMouseMouse = function(data) {
-        loop.handleMouseMove(data);
-      };
+      }
 
-      keyboardControls.addDownEventHandler('w', function() {
-        loop.handleMoveForward();
-      });
-
-      loop.animate();
-    });
-  }
-
-  getScene() {
-    return world;
-  }
-}
+      getScene() {
+        return world;
+      }
+    }
 
 customElements.define('page-index', IndexElement);
 

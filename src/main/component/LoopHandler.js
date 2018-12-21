@@ -1,7 +1,12 @@
 import {Clock} from '/node_modules/three/build/three.module.js';
+import KeyboardControls from '/frontend/assets/js/KeyboardControls.js';
+import PointerLockManager from '/frontend/assets/js/PointerLockManager.js';
+import MouseControls from '/frontend/assets/js/MouseControls.js';
+
 const PI_2 = Math.PI / 2;
 
 class LoopHandler {
+
   constructor(config) {
     this.perspective = config.perspective;
     this.world = config.world;
@@ -13,40 +18,40 @@ class LoopHandler {
     this.cancelAnimationFrame = window.cancelAnimationFrame;
     this.clock = new Clock(false);
     this.delta = 0;
+    this.keyboardControls = new KeyboardControls(config.perspective);
+    this.pointerLockManager = new PointerLockManager(config.perspective);
+    this.mouseControls = new MouseControls(config.perspective);
   }
 
-  handleMouseMove(input) {
+  start() {
+    let loop = this;
+    let perspective = this.perspective;
+    let keyboardControls = this.keyboardControls;
+    let mouseControls = this.mouseControls;
+    this.pointerLockManager.onPointerLocked()
+    .then(function() {
+      mouseControls.addMouseMoveHandler(
+        function(result) {
+          loop.handleMouseMove(result);
+      });
 
-    let rotationY = input.x * 0.002;
-    let rotationX = input.y * 0.002;
+      mouseControls.enabled = true;
 
-    let event = new CustomEvent('rotate', {
-      detail: {
-        x: rotationX,
-        y: rotationY,
-      }});
+      keyboardControls.addDownEventHandler('w', function() {
+          loop.handleMoveForward();
+        });
 
-    this.perspective.dispatchEvent(event);
-    return this;
-  }
-
-  handleMoveForward() {
-    // physicsWorker.postMessage('move');
-    console.log("move forward");
-  }
-
-  updatePhysics() {
-    return this;
-  }
-
-  updateWorld() {
-    return this;
+      keyboardControls.enabled = true;
+      loop.animate();
+    });
   }
 
   animate() {
+
     let loop = this;
     let world = this.world;
     let physicsWorker = new Worker('/frontend/assets/js/PhysicsWorker.js');
+    this.physicsWorker = physicsWorker;
 
     physicsWorker.onmessage = function(event) {
       if (event.data.status === 'WORKER_READY') {
@@ -58,10 +63,15 @@ class LoopHandler {
         .updateWorld()
         .updatePerspective(event.data)
         .tick(); */
-        loop.updatePerspective();
-        // loop.requestId = requestAnimationFrame(() => loop.updateWorld());
+        loop.requestId = requestAnimationFrame((timestamp) => {
+          loop.updatePerspective()
+              .updateWorld();
+        });
       } else {
-        loop.updatePerspective(event.data);
+        loop.requestId = requestAnimationFrame((timestamp) => {
+          loop.updatePerspective(event.data)
+              .updateWorld();
+        });
       }
     };
 
@@ -69,6 +79,29 @@ class LoopHandler {
       console.log('something went wrong', error);
     };
 
+    return this;
+  }
+
+  handleMouseMove(data) {
+
+    let event = new CustomEvent('rotate', {
+      detail: data });
+
+    this.perspective.dispatchEvent(event);
+    return this;
+  }
+
+  handleMoveForward() {
+    this.physicsWorker.postMessage({command:'MOVE'});
+    console.log("move forward");
+  }
+
+  updatePhysics() {
+    return this;
+  }
+
+  updateWorld() {
+    this.keyboardControls.dispatch();
     return this;
   }
 

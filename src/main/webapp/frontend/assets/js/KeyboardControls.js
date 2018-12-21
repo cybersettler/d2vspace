@@ -1,24 +1,40 @@
 import KeyCodeMap from "/frontend/assets/js/KeyCodeMap.js";
 
-function KeyboardControls(){
+class KeyboardControls {
 
-  var controls = this;
-  this.upEvents = [];
-  this.downEvents = [];
+  constructor(view) {
+    let controls = this;
+    this.upEvents = [];
+    this.downEvents = [];
+    this.upHandlers = [];
+    this.downHandlers = [];
+    this.enabled = false;
+    this.parentView = view;
+    document.addEventListener( 'keydown', function(event) {
+      controls.registerKeyEvent(event);
+    }, false );
+    document.addEventListener( 'keyup', function(event) {
+      controls.registerKeyEvent(event);
+    }, false );
+  }
 
-  this.upHandlers = [];
-  this.downHandlers = [];
+  registerKeyEvent(e) {
 
-  // this.isEnabled = false;
+    if (!this.enabled) {
+      return;
+    }
 
-  this.registerKeyEvent = function( e ){
+    this.upEvents[ Number(e.keyCode) ] = e.type === 'keyup';
+    this.downEvents[ Number(e.keyCode) ] = e.type === 'keydown';
+  }
 
-    controls.upEvents[ Number(e.keyCode) ] = e.type === 'keyup';
-    controls.downEvents[ Number(e.keyCode) ] = e.type === 'keydown';
+  dispatch() {
 
-  };
+    if (!this.enabled) {
+      return;
+    }
 
-  this.dispatch = function(){
+    let controls = this;
 
     this.downEvents.forEach( function( triggered, key ){
       if( triggered && controls.downHandlers[ key ]){
@@ -34,20 +50,15 @@ function KeyboardControls(){
 
     this.downEvents.length = 0;
     this.upEvents.length = 0;
+  }
 
-  };
+  addUpEventHandler(key, handler) {
+    this.upHandlers[KeyCodeMap[key]] = handler;
+  }
 
-  this.addUpEventHandler = function( key, handler ){
-
-    this.upHandlers[ KeyCodeMap[ key ] ] = handler;
-
-  };
-
-  this.addDownEventHandler = function( key, handler ){
-
-    this.downHandlers[ KeyCodeMap[ key ] ] = handler;
-
-  };
+  addDownEventHandler(key, handler) {
+    this.downHandlers[KeyCodeMap[key]] = handler;
+  }
 
 }
 
