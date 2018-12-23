@@ -1,9 +1,8 @@
-import {Clock} from '/node_modules/three/build/three.module.js';
+import {Clock, Quaternion, Vector3} from '/node_modules/three/build/three.module.js';
 import KeyboardControls from '/frontend/assets/js/KeyboardControls.js';
 import PointerLockManager from '/frontend/assets/js/PointerLockManager.js';
 import MouseControls from '/frontend/assets/js/MouseControls.js';
-
-const PI_2 = Math.PI / 2;
+import Subject from '/frontend/assets/js/Subject.js';
 
 class LoopHandler {
 
@@ -21,6 +20,7 @@ class LoopHandler {
     this.keyboardControls = new KeyboardControls(config.perspective);
     this.pointerLockManager = new PointerLockManager(config.perspective);
     this.mouseControls = new MouseControls(config.perspective);
+    this.subject = new Subject();
   }
 
   start() {
@@ -84,15 +84,20 @@ class LoopHandler {
 
   handleMouseMove(data) {
 
+    let subjectPerspective = this.subject.turnPerspective(data);
+
     let event = new CustomEvent('rotate', {
-      detail: data });
+      detail: subjectPerspective });
 
     this.perspective.dispatchEvent(event);
     return this;
   }
 
   handleMoveForward() {
-    this.physicsWorker.postMessage({command:'MOVE'});
+    let direction = this.subject.getHeading();
+    this.physicsWorker.postMessage({command:'WALK', payload: {
+      direction: [direction.x, direction.y, direction.z]
+    }});
     console.log("move forward");
   }
 

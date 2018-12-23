@@ -54,21 +54,28 @@ Ammo().then(function(Ammo) {
               status: 'WORLD_READY'
             });
           });
-    } else if (event.data.command === 'MOVE') {
+    } else if (event.data.command === 'WALK') {
       if (!world.subject.isActive()) {
         console.warn("character not active");
         world.subject.forceActivationState(1);
       }
+
+      let v = event.data.payload.direction;
+      let direction = new THREE.Vector3(v[0], v[1], v[2]);
+      direction.multiplyScalar(0.3); // Torque arm
+      let thrust = new THREE.Vector3(0, -1, 0);
+      direction.cross(thrust);
+      let torque = new Ammo.btVector3(
+        direction.x, direction.y, direction.z);
+
       let transform = world.state.transform;
       world.subject.getMotionState()
         .getWorldTransform (transform);
-      let torque = new Ammo.btVector3(1,0,0);
       world.subject.applyTorque(torque);
       world.subject.getMotionState()
         .setWorldTransform(transform);
       world.subject.setCenterOfMassTransform(transform);
       let dt = Date.now() - world.state.time;
-      // world.subject.walk(null, dt);
       world.dynamicsWorld.stepSimulation(dt, 2);
     }
   };
