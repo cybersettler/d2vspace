@@ -60,8 +60,20 @@ Ammo().then(function(Ammo) {
         world.subject.forceActivationState(1);
       }
 
+      let lv = world.subject.getLinearVelocity();
+      // let linearVelocity = new THREE.Vector3(lv.x(), lv.y(), lv.z());
+
       let v = event.data.payload.direction;
       let direction = new THREE.Vector3(v[0], v[1], v[2]);
+      // let angle = direction.angleTo(linearVelocity);
+
+      lv.setX(direction.x);
+      lv.setY(direction.y);
+      lv.setZ(direction.z);
+
+      world.subject.setLinearVelocity(lv);
+      world.subject.setAngularVelocity(new Ammo.btVector3(0, 0, 0));
+
       direction.multiplyScalar(0.3); // Torque arm
       let thrust = new THREE.Vector3(0, -1, 0);
       direction.cross(thrust);
