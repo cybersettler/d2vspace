@@ -2,16 +2,44 @@ import {Vector3, Quaternion, Euler} from '/node_modules/three/build/three.module
 
 const NORTH = new Vector3(0, 0, 1);
 const SOUTH = new Vector3(0, 0, -1);
+const UP = new Vector3(0, 1, 0);
 const PI_2 = Math.PI/2;
 
 class Subject {
   constructor() {
+    this.locomotion = {
+      forward: false,
+      backward: false,
+      left: false,
+      right: false,
+      up: false,
+      down: false
+    }
     this.perspective = {
       yaw: 0,
       pitch: 0,
       heading: SOUTH.clone(),
       rotation: new Euler(0, 0, 0, 'XYZ')
     };
+  }
+
+  getMovingDirection() {
+    let forward  = this.locomotion.forward ?
+      this.perspective.heading.clone() : new Vector3(0, 0, 0);
+    let backward = this.locomotion.backward ?
+      this.perspective.heading.clone()
+      .applyAxisAngle(UP, Math.PI) :
+      new Vector3(0, 0, 0);
+    let left  = this.locomotion.left ?
+      this.perspective.heading.clone()
+      .applyAxisAngle(UP, Math.PI/2) :
+      new Vector3(0, 0, 0);
+    let right = this.locomotion.right ?
+      this.perspective.heading.clone()
+      .applyAxisAngle(UP, - Math.PI/2) :
+      new Vector3(0, 0, 0);
+
+    return forward.add(backward).add(left).add(right);
   }
 
   getHeading() {

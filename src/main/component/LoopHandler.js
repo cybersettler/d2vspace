@@ -28,6 +28,8 @@ class LoopHandler {
     let perspective = this.perspective;
     let keyboardControls = this.keyboardControls;
     let mouseControls = this.mouseControls;
+    let subject = this.subject;
+
     this.pointerLockManager.onPointerLocked()
     .then(function() {
       mouseControls.addMouseMoveHandler(
@@ -38,8 +40,36 @@ class LoopHandler {
       mouseControls.enabled = true;
 
       keyboardControls.addDownEventHandler('w', function() {
-          loop.handleMoveForward();
+          subject.locomotion.forward = true;
         });
+
+      keyboardControls.addUpEventHandler('w', function() {
+        subject.locomotion.forward = false;
+      });
+
+      keyboardControls.addDownEventHandler('s', function() {
+          subject.locomotion.backward = true;
+        });
+
+      keyboardControls.addUpEventHandler('s', function() {
+        subject.locomotion.backward = false;
+      });
+
+      keyboardControls.addDownEventHandler('a', function() {
+          subject.locomotion.left = true;
+        });
+
+      keyboardControls.addUpEventHandler('a', function() {
+        subject.locomotion.left = false;
+      });
+
+      keyboardControls.addDownEventHandler('d', function() {
+          subject.locomotion.right = true;
+        });
+
+      keyboardControls.addUpEventHandler('d', function() {
+        subject.locomotion.right = false;
+      });
 
       keyboardControls.enabled = true;
       loop.animate();
@@ -93,12 +123,11 @@ class LoopHandler {
     return this;
   }
 
-  handleMoveForward() {
-    let direction = this.subject.getHeading();
+  updateAvatar() {
+    let direction = this.subject.getMovingDirection();
     this.physicsWorker.postMessage({command:'WALK', payload: {
       direction: [direction.x, direction.y, direction.z]
     }});
-    console.log("move forward");
   }
 
   updatePhysics() {
@@ -107,6 +136,7 @@ class LoopHandler {
 
   updateWorld() {
     this.keyboardControls.dispatch();
+    this.updateAvatar();
     return this;
   }
 
