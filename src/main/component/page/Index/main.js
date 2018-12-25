@@ -37,7 +37,7 @@ const world = {
       'instances': [
         {
           'position': [0, 5, -3], 'rotation': [0, 0, 0],
-          'mass': 1,
+          'mass': 1, 'restitution': 0.5
         },
       ],
     },

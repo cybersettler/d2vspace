@@ -6,7 +6,7 @@ class RigidBodyFactory {
   BoxGeometry(config) {
     let Ammo = this.Ammo;
     let dimensions = new Ammo.btVector3(
-        config.width, config.height, config.height);
+        config.width/2, config.height/2, config.height/2);
     return new Ammo.btBoxShape(dimensions);
   }
 
@@ -32,6 +32,8 @@ class RigidBodyFactory {
     shape.calculateLocalInertia(mass, inertia);
     let rigidBodyInfo = new Ammo.btRigidBodyConstructionInfo(
         mass, motionState, shape, inertia);
-    return new Ammo.btRigidBody(rigidBodyInfo);
+    let result = new Ammo.btRigidBody(rigidBodyInfo);
+    result.setRestitution(config.restitution);
+    return result;
   }
 }

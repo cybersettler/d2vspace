@@ -38,6 +38,8 @@ class World {
 
   initGround(config) {
     let groundRigidBody = WorldUtil.createGroundRigidBody(this.Ammo);
+    groundRigidBody.setRestitution(1);
+    groundRigidBody.setFriction(1);
     this.dynamicsWorld.addRigidBody(groundRigidBody);
   }
 
@@ -95,7 +97,8 @@ class World {
         type: 'SphereGeometry',
         radius: 0.3
       },
-      mass: 1
+      mass: 1,
+      restitution: 0.1
     });
 
     this.dynamicObjects.push({
@@ -185,7 +188,8 @@ const WorldUtil = {
       uuid: item.uuid || THREE.Math.generateUUID(),
       type: component.type,
       geometry: component.geometry,
-      mass: item.mass
+      mass: item.mass || component.mass || 0,
+      restitution: item.restitution || component.restitution || 1
     };
 
     let body = world.rigidBodyFactory.create(bodyData);
