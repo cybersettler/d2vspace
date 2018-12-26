@@ -71,6 +71,10 @@ class LoopHandler {
         subject.locomotion.right = false;
       });
 
+      keyboardControls.addUpEventHandler('space', function() {
+        subject.locomotion.jump = true;
+      });
+
       keyboardControls.enabled = true;
       loop.animate();
     });
@@ -128,6 +132,10 @@ class LoopHandler {
     this.physicsWorker.postMessage({command:'WALK', payload: {
       direction: [direction.x, direction.y, direction.z]
     }});
+    if (this.subject.isJumping()) {
+      this.physicsWorker.postMessage({command:'JUMP'});
+      this.subject.setJumping(false);
+    }
   }
 
   updatePhysics() {

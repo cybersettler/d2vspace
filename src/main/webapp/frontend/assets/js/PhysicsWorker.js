@@ -17,6 +17,8 @@ Ammo().then(function(Ammo) {
     rigidBodyFactory: new RigidBodyFactory(Ammo)
   });
 
+  const DOWN = new Ammo.btVector3(0, -1, 0);
+
   // START -- Your code here
 
   let interval;
@@ -84,6 +86,16 @@ Ammo().then(function(Ammo) {
       world.subject.getMotionState()
         .getWorldTransform (transform);
       world.subject.applyTorque(torque);
+      world.subject.getMotionState()
+        .setWorldTransform(transform);
+      world.subject.setCenterOfMassTransform(transform);
+      let dt = Date.now() - world.state.time;
+      world.dynamicsWorld.stepSimulation(dt, 2);
+    } else if (event.data.command === 'JUMP') {
+      let transform = world.state.transform;
+      world.subject.getMotionState()
+        .getWorldTransform (transform);
+      world.subject.applyCentralImpulse(DOWN);
       world.subject.getMotionState()
         .setWorldTransform(transform);
       world.subject.setCenterOfMassTransform(transform);

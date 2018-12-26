@@ -13,7 +13,8 @@ class Subject {
       left: false,
       right: false,
       up: false,
-      down: false
+      down: false,
+      jump: false
     }
     this.perspective = {
       yaw: 0,
@@ -44,6 +45,14 @@ class Subject {
 
   getHeading() {
     return this.perspective.heading;
+  }
+
+  isJumping() {
+    return this.locomotion.jump;
+  }
+
+  setJumping() {
+    this.locomotion.jump = false;
   }
 
   turnPerspective(data) {

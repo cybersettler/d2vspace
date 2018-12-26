@@ -8,6 +8,7 @@ const KeyCodeMap = {
   "pause/break":	19,
   "capslock":     20,
   "escape":       27,
+  "space":        32,
   "page_up":      33,
   "page_down":    34,
   "end":          35,

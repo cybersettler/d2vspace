@@ -24,6 +24,8 @@ class KeyboardControls {
       return;
     }
 
+    e.preventDefault();
+
     this.upEvents[ Number(e.keyCode) ] = e.type === 'keyup';
     this.downEvents[ Number(e.keyCode) ] = e.type === 'keydown';
   }
