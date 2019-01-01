@@ -218,6 +218,8 @@ class IndexElement extends PageElement {
   connectedCallback() {
     let element = this;
     let perspective, loop;
+    document.querySelector('web-app')
+    .setAttribute('style', 'padding: 0');
     this.scope.appendViewFromTemplate(
         '/frontend/component/page/Index/view.html')
         .then((template) => {
@@ -237,11 +239,18 @@ class IndexElement extends PageElement {
           });
 
           loop.start();
+          let modal = document.querySelector('ui-modal');
+          modal.dispatchEvent(new Event('openDialog'));
         });
       }
 
       getScene() {
         return world;
+      }
+
+      onEnterSpace() {
+        document.querySelector('ui-p3d')
+          .requestPointerLock();
       }
     }
 

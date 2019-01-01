@@ -29,6 +29,7 @@ class LoopHandler {
     let keyboardControls = this.keyboardControls;
     let mouseControls = this.mouseControls;
     let subject = this.subject;
+    let pointerLockManager = this.pointerLockManager;
 
     this.pointerLockManager.onPointerLocked()
     .then(function() {
@@ -36,8 +37,6 @@ class LoopHandler {
         function(result) {
           loop.handleMouseMove(result);
       });
-
-      mouseControls.enabled = true;
 
       keyboardControls.addDownEventHandler('w', function() {
           subject.locomotion.forward = true;
@@ -75,6 +74,23 @@ class LoopHandler {
         subject.locomotion.jump = true;
       });
 
+      keyboardControls.addUpEventHandler('escape', function() {
+        if (!pointerLockManager.isPointerLocked()) {
+          return;
+        }
+        mouseControls.enabled = false;
+        keyboardControls.enabled = false;
+        pointerLockManager.releasePointerLock();
+        pointerLockManager.onPointerLocked()
+        .then(() => {
+          mouseControls.enabled = true;
+          keyboardControls.enabled = true;
+        });
+        document.querySelector('ui-modal')
+          .dispatchEvent(new Event('openDialog'));
+      });
+
+      mouseControls.enabled = true;
       keyboardControls.enabled = true;
       loop.animate();
     });

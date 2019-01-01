@@ -1,24 +1,10 @@
 <template>
-  <!-- ui-fpp data-scene="{scene}">
-    <ui-panel>
-      <div class="panel-body">
-        To look around use your mouse. To move around use w, a, s, d.
-      </div>
-      <div class="panel-footer">
-        <button data-role="close">Close</button>
-      </div>
-    </ui-panel>
-  </ui-fpp -->
-  <h1>D2VSpace</h1>
   <ui-p3d data-scene="{scene}"></ui-p3d>
-  <wkui-panel>
-    <div class="panel-body">
-      To look around use your mouse. To move around use w, a, s, d.
-    </div>
-    <div class="panel-footer">
-      <button class="btn btn-default" data-role="close"
-              onclick="document.querySelector('ui-p3d')
-                .requestPointerLock()">Close</button>
-    </div>
-  </wkui-panel>
+  <ui-modal data-confirm={enterSpace}>
+    <header><h2>D2VSpace</h2></header>
+    <div>To look around use your mouse. To move around use w, a, s, d.</div>
+    <footer>
+      <button data-role="confirm" class="primary">Ok</button>
+    </footer>
+  </ui-modal>
 </template>

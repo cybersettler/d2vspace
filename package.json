@@ -22,7 +22,7 @@
     "less": "^3.0.4",
     "map-stream": "0.0.6",
     "vinyl-paths": "^2.1.0",
-    "weldkit": "^0.1.8"
+    "weldkit": "^0.1.10"
   },
   "repository": "git@github.com:cybersettler/d2vspace.git",
   "author": "Javier escobar <cybersettler@babylonone.com>",

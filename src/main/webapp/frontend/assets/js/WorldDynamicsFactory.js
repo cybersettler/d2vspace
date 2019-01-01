@@ -63,42 +63,13 @@ class World {
 
     let position = config.subject.position || config.subject.defaultPosition;
 
-    /* let model = new HumanModel({
-      width: 0.6,
-      height: 1.7,
-      mass: 70,
-      position: position
-    });
-
-    this.dynamicObjects.push({
-      uuid: config.subject.uuid,
-      body: model.body
-    });
-
-    this.subjectId = config.subject.uuid;
-    this.subject = model;
-    this.dynamicsWorld.addRigidBody(model.body);
-
-    let origin = model.body.getWorldTransform().getOrigin();
-    origin.setX(position[0]);
-    origin.setY(position[1] + 1);
-    origin.setZ(position[2]);
-    model.body.setSleepingThresholds (0.0, 0.0);
-    model.body.activate();
-    let rotation = model.body.getWorldTransform().getRotation();
-    rotation.setX(1);
-    rotation.setY(0);
-    rotation.setZ(0);
-    rotation.setW(1);
-    this.dynamicsWorld.addRigidBody(model.body); */
-
     let body = this.rigidBodyFactory.create({
       geometry: {
         type: 'SphereGeometry',
         radius: 0.3
       },
       mass: 1,
-      restitution: 0.1
+      restitution: 0.9
     });
 
     this.dynamicObjects.push({

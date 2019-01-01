@@ -17,7 +17,7 @@ Ammo().then(function(Ammo) {
     rigidBodyFactory: new RigidBodyFactory(Ammo)
   });
 
-  const DOWN = new Ammo.btVector3(0, -1, 0);
+  const DOWN_IMPULSE = new Ammo.btVector3(0, -10, 0);
 
   // START -- Your code here
 
@@ -95,7 +95,7 @@ Ammo().then(function(Ammo) {
       let transform = world.state.transform;
       world.subject.getMotionState()
         .getWorldTransform (transform);
-      world.subject.applyCentralImpulse(DOWN);
+      world.subject.applyCentralImpulse(DOWN_IMPULSE);
       world.subject.getMotionState()
         .setWorldTransform(transform);
       world.subject.setCenterOfMassTransform(transform);

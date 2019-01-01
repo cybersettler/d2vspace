@@ -79,7 +79,11 @@ class PointerLockManager {
         onPointerlockerror);
     document.removeEventListener('webkitpointerlockerror',
         onPointerlockerror);
-  };
+  }
+
+  releasePointerLock() {
+    document.exitPointerLock();
+  }
 }
 
 function onPointerlockerror(e) {
