@@ -1,0 +1,69 @@
+{
+  "$schema":"http://json-schema.org/draft-04/schema#",
+  "title":"Geometry",
+  "description":"Geometry of a component.",
+  "type":"object",
+  "properties":{
+    "id":{
+      "title":"ID",
+      "description":"Unique identifier for this geometry.",
+      "type":"string"
+    },
+    "name":{
+      "title":"Name",
+      "type":"string"
+      },
+    "type": {
+      "title":"Type",
+      "type":"string",
+      "enum":[
+        "BoxGeometry",
+        "SphereGeometry"
+      ]
+    },
+    "width": {
+      "title": "Width",
+      "type":"number"
+    },
+    "height": {
+      "title": "Width",
+      "type":"number"
+    },
+    "depth": {
+      "title": "Width",
+      "type":"number"
+    },
+    "radius": {
+      "title": "Width",
+      "type":"number"
+    },
+    "widthSegments": {
+      "title": "Width",
+      "type":"integer"
+    },
+    "heightSegments": {
+      "title": "Width",
+      "type": "integer"
+    },
+    "depthSegments": {
+      "title": "Width",
+      "type": "integer"
+    },
+    "phiStart": {
+      "title": "Width",
+      "type":"number"
+    },
+    "phiLength": {
+      "title": "Width",
+      "type":"number"
+    },
+    "thetaStart": {
+      "title": "Width",
+      "type":"number"
+    },
+    "thetaLength": {
+      "title": "Width",
+      "type":"number"
+    }
+  }
+}

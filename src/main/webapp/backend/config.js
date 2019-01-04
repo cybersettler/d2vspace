@@ -7,6 +7,10 @@ module.exports = {
                 collectionName: "textures",
                 schema: "textures/schema.json",
                 filename: "textures/index.json"
+            }, {
+                collectionName: "geometries",
+                schema: "geometries/schema.json",
+                filename: "geometries/index.json"
             }
         ]
     },

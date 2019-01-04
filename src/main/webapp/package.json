@@ -18,7 +18,7 @@
         "ui-mousecontrols": "^0.1.2",
         "ui-p3d": "^0.3.0",
         "ui-modal": "^0.2.1",
-        "websemble": "^7.0.1",
+        "websemble": "^7.0.3",
         "weldkit": "^0.1.10",
         "wkui-panel": "^1.1.6"
     }

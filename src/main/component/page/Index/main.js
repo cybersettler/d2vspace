@@ -209,10 +209,9 @@ class IndexElement extends PageElement {
 
   constructor() {
     super();
-    /*
-    this.scope.sendGetRequest('/textures').then(function(result) {
-      console.log('received textures', result);
-    }); */
+    let request = new Request('/catalog/textures/NHVmrqKg7jFGqWFR');
+    fetch(request)
+    .then(result => console.log(result));
   }
 
   connectedCallback() {
