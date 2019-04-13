@@ -1,0 +1,3 @@
+{"type":"AmbientLight","name":"AmbientLight1","color":16777215,"matrix":[1,0,0,0,0,1,0,0,0,0,1,0,0,99.58999633789062,0,1],"_id":"8622VVvvdG66LBPI"}
+{"type":"Mesh","name":"brickBlock","geometryName":"blockGeometry","materialName":"brickMaterial","matrix":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"_id":"Hf0SiDLLId219KyM"}
+{"type":"Mesh","name":"redBall","geometryName":"ballGeometry","materialName":"redLambertMaterial","matrix":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],"_id":"rPMrChIAAfw6pNdt"}

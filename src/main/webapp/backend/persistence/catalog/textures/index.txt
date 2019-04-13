@@ -1,0 +1,3 @@
+{"name":"mushroomTexture","imageURL":"assets/images/textures/mushroom_block_skin_stem.png","mapping":"UVMapping","_id":"NHVmrqKg7jFGqWFR"}
+{"name":"brickTexture","imageURL":"assets/images/textures/brick.png","mapping":"UVMapping","_id":"a8Vhximp8lscPnpc"}
+{"name":"sandstoneTexture","imageURL":"assets/images/textures/sandstone_smooth.png","mapping":"UVMapping","_id":"pTRC9Ms4842BskgE"}

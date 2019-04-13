@@ -1,0 +1,89 @@
+{
+  "$schema":"http://json-schema.org/draft-04/schema#",
+  "title":"Body",
+  "description":"Body.",
+  "type":"object",
+  "properties":{
+    "id":{
+      "title":"ID",
+      "description":"Unique identifier for this body.",
+      "type":"string"
+    },
+    "name":{
+      "title":"Name",
+      "type":"string"
+      },
+    "type": {
+      "title": "type",
+      "type": "string",
+      "enum": [
+        "Mesh", "AmbientLight"
+      ]
+    },
+    "geometryName": {
+      "title": "Geometry",
+      "type": "string",
+      "description": "Geometry name"
+    },
+    "materialName": {
+      "title": "Material",
+      "type": "string",
+      "description": "Material name"
+    },
+    "quaternion": {
+      "title": "Quaternion",
+      "description": "Object's local rotation as a Quaternion.",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "rotation": {
+      "title": "Rotation",
+      "description": "Object's local rotation in Euler angles, in radians.",
+      "type": "array",
+      "items": [
+        {"type": "number"},
+        {"type": "number"},
+        {"type": "number"},
+        {"type": "string"}
+      ]
+    },
+    "scale": {
+      "title": "Scale",
+      "type": "array",
+      "description": "The object's local scale. Default is Vector3( 1, 1, 1 ).",
+      "items": {
+        "type": "number"
+      }
+    },
+    "matrix": {
+      "title": "matrix",
+      "description": "The local transform matrix.",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "visible": {
+      "title": "Visible",
+      "type": "boolean",
+      "description": "Object gets rendered if true. Default is true."
+    },
+    "castShadow": {
+      "title": "Cast shadow",
+      "type": "boolean",
+      "description": "Whether the object gets rendered into shadow map. Default is false."
+    },
+    "receiveShadow": {
+      "title": "Receive shadow",
+      "description": "Whether the material receives shadows. Default is false.",
+      "type": "boolean"
+    },
+    "color": {
+      "title": "Color",
+      "type": "string"
+    }
+  },
+  "required": ["name", "type"]
+}

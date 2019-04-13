@@ -1,0 +1,42 @@
+{
+  "$schema":"http://json-schema.org/draft-04/schema#",
+  "title":"Component",
+  "description":"Component.",
+  "type":"object",
+  "properties":{
+    "id":{
+      "title":"ID",
+      "description":"Unique identifier for this component.",
+      "type":"string"
+    },
+    "name":{
+      "title":"Name",
+      "type":"string"
+    },
+    "body": {
+      "title": "Body",
+      "type": "string",
+      "description": "Body name"
+    },
+    "componentType": {
+      "title": "Component type",
+      "type": "string",
+      "enum": [
+        "illumination",
+        "buildingBlock",
+        "freeBody"
+      ]
+    },
+    "mass": {
+      "title": "Mass",
+      "type": "number",
+      "description": "Mass of the physical object in kilograms. A mass of 0 implies a static object."
+    },
+    "restitution": {
+      "title": "Restitution",
+      "type": "number",
+      "description": "Measure of the capacity of a an object to retain it's kinetic energy after a collision"
+    }
+  },
+  "required": ["name", "componentType"]
+}

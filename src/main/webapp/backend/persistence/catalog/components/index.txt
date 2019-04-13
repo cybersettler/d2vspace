@@ -1,0 +1,3 @@
+{"name":"AmbientLight1","body":"AmbientLight1","componentType":"illumination","_id":"lfNJkFy1EuSFlAAl"}
+{"name":"brickBlock","body":"brickBlock","componentType":"buildingBlock","thumbnailURL":"site/assets/images/thumb/brick.png","_id":"mPcVyuYVJwKtdSqt"}
+{"name":"redBall","body":"redBall","componentType":"freeBody","thumbnailURL":"site/assets/images/thumb/red_ball.png","_id":"IXNgYeYXaJZBXxJD"}

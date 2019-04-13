@@ -1,0 +1,2 @@
+{"type":"MeshLambertMaterial","name":"brickMaterial","color":16777215,"ambient":16777215,"emissive":0,"texture":"brickTexture","_id":"X224XyTSLpmhd3nE"}
+{"name":"redLambertMaterial","type":"MeshLambertMaterial","color":16721408,"emissive":0,"_id":"2ErMLMvcbkkXJ3MC"}

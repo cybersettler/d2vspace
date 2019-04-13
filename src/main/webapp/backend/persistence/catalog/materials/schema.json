@@ -1,0 +1,76 @@
+{
+  "$schema":"http://json-schema.org/draft-04/schema#",
+  "title":"Material",
+  "description":"Body material of a component.",
+  "type":"object",
+  "properties":{
+    "id":{
+      "title":"ID",
+      "description":"Unique identifier for this material.",
+      "type":"string"
+    },
+    "name":{
+      "title":"Name",
+      "type":"string"
+    },
+    "type": {
+      "title": "Type",
+      "type": "string",
+      "enum": [
+        "LineBasicMaterial",
+        "LineDashedMaterial",
+        "MeshBasicMaterial",
+        "MeshDepthMaterial",
+        "MeshLambertMaterial",
+        "MeshNormalMaterial",
+        "MeshPhongMaterial",
+        "MeshPhysicalMaterial",
+        "MeshStandardMaterial",
+        "MeshToonMaterial",
+        "PointsMaterial",
+        "RawShaderMaterial",
+        "ShaderMaterial",
+        "ShadowMaterial",
+        "SpriteMaterial"
+      ]
+    },
+    "color": {
+      "title": "Color",
+      "type": "string",
+      "description": "Color of the material, by default set to white (0xffffff)."
+    },
+    "opacity" : {
+      "title": "Opacity",
+      "type": "number",
+      "description": "Float in the range of 0.0 - 1.0 indicating how transparent the material is. A value of 0.0 indicates fully transparent, 1.0 is fully opaque. If the material's transparent property is not set to true, the material will remain fully opaque and this value will only affect its color. Default is 1.0."
+    },
+    "specular": {
+      "title": "Specular",
+      "type": "string",
+      "description": "Specular color of the material. Default is a Color set to 0x111111 (very dark grey). This defines how shiny the material is and the color of its shine."
+    },
+    "hsl": {
+      "title": "HSL",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "emissive": {
+      "title": "Emissive",
+      "type": "string",
+      "description": "Emissive (light) color of the material, essentially a solid color unaffected by other lighting. Default is black."
+    },
+    "vertexColors": {
+      "title": "Vertex colors",
+      "type": "integer",
+      "description": "Defines whether vertex coloring is used. Default is THREE.NoColors. Other options are THREE.VertexColors and THREE.FaceColors."
+    },
+    "texture": {
+      "title": "Texture",
+      "type": "string",
+      "description": "Texture name"
+    }
+  },
+  "required": ["name", "type"]
+}

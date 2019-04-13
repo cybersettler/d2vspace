@@ -14,7 +14,8 @@ app.onReady.then(function() {
     // Spawn your IPFS node \o/
   //  const node = new IPFS();
 
-/*    node.on('ready', function () {
+/*
+    node.on('ready', function () {
         /* node.id(function (err, id) {
          if (err) {
          return console.log('error', err)
@@ -29,7 +30,7 @@ app.onReady.then(function() {
     }); */
 
 
-
+/*
     protocol.registerFileProtocol('atom', function (request, callback) {
         const url = request.url.substr(7);
         var p = path.normalize(`${__dirname}/${url}`);
@@ -39,7 +40,7 @@ app.onReady.then(function() {
         if (error) {
             console.error('Failed to register protocol')
         }
-    });
+    }); */
 });
 
 console.log('App started - ' + typeof app);
