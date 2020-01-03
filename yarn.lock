@@ -1818,8 +1818,8 @@ lodash.templatesettings@^3.0.0:
     lodash.escape "^3.0.0"
 
 lodash@^4.0.0, lodash@^4.17.10:
-  version "4.17.10"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
 
 longest@^1.0.1:
   version "1.0.1"
@@ -2996,9 +2996,9 @@ vinyl@^2.0.0:
     remove-trailing-separator "^1.0.1"
     replace-ext "^1.0.0"
 
-weldkit@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/weldkit/-/weldkit-0.1.0.tgz#b07849ed0b92dd8e06ad7e8c9177b4551099e129"
+weldkit@^0.1.10:
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/weldkit/-/weldkit-0.1.11.tgz#ece269cc5aaa9915deaebcada5c7a03b13462272"
   dependencies:
     d3 "^5.4.0"
     handlebars "^4.0.11"
